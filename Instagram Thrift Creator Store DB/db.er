@@ -1,0 +1,44 @@
+user [icon: user]{
+  user_id int pk
+  username string UNIQUE
+  email VARCHAR(100) UNIQUE NOT NULL
+  phone_no VARCHAR(15)
+  password VARCHAR(255)
+  user_address text
+}
+
+item [icon: clock]{
+  item_no serial pk
+  item_type ENUM["thrifted", "handmade"]
+  no_of_item_in_stock int
+  price int
+}
+
+order_items {
+  id int pk
+  order_id int fk
+  item_id int fk
+  quantity decimal
+}
+
+order [icon: box]{
+  order_id int pk
+  user_id fk
+  all_items ENUM[item_no fk]
+  total_price decimal
+  delivery_address text
+  order_status ENUM["payment pending", "booked", "delevered"]
+}
+
+payment_details [icon: payment]{
+  user_id fk
+  order_id fk
+  payment_type ENUM["card", "cod", "UPI"]
+  payment_details ENUM["pending", "done"]
+}
+
+user.user_id < order.user_id
+order.order_id < payment_details.order_id
+user.user_id < payment_details.user_id
+order.order_id < order_items.order_id
+item.item_no < order_items.item_id
