@@ -1,0 +1,105 @@
+trainer [icon: user, color: blue] {
+  trainer_id int pk
+  trainer_name string NOT NULL
+  trainer_age int NOT NULL
+  trainer_email VARCHAR(100) NOT NULL
+  trainer_ph_no VARCHAR(15) NOT NULL
+  is_trainer_available bool
+  trainer_salary int
+  trainer_experience_in_year int
+}
+
+clients [icon: users, color: yellow] {
+  client_id string pk
+  client_name string NOT NULL
+  client_age int NOT NULL
+  client_email VARCHAR(100) NOT NULL
+  client_ph_no VARCHAR(15) NOT NULL
+  trainer_id int fk
+  is_ant_active_plan bool
+  plan_id int fk
+  plan_start_date Date
+  plan_end_date Date
+  is_any_consult_active bool
+  consult_id int fk
+  is_subscription_available bool
+  subscription_id int fk
+}
+
+plans [icon: plane, color: green] {
+  plan_id int pk
+  plan_name text NOT NULL
+  plan_duration_in_months int NOT NULL
+  is_plan_available bool
+  trainer_id fk
+  is_consultency_available bool
+  consult_id fk
+  subscription_id fk
+}
+
+consultancy [icon: home, color: red] {
+  consult_id int pk
+  consult_date Date
+  consult_time VARCHAR(15)
+  trainer_id fk
+}
+
+subscription [icon: folder, color: gold] {
+  subscription_id int pk
+  subscription_name string NOT NULL
+  is_plan_available bool
+  plan_id fk
+  is_consultency_available bool
+  consult_id fk
+}
+order [icon: chart, color: white] {
+  order_id int pk
+  client_id fk
+  is_plan_available bool fk
+  plan_id fk
+  is_consultency_available bool fk
+  consult_id fk
+  is_subscription_available bool fk
+  subscription_id fk
+  total_order_amount int NOT NULL
+}
+payments [icon: money, color: green] {
+  payment_id int pk
+  client_id int fk
+  order_id fk
+  payment_type ENUM ["UPI", "CARD"]
+  payment_status ENUM ["pending", "complete"]
+}
+
+progress_tracker_of_clients [icon: progress, color: orange] {
+  progress_id int pk
+  client_id fk
+  progress_status ENUM ["not-started", "on-going", "complete"]
+  weight decimal NOT NULL
+  height decimal NOT NULL
+  bmi decimal
+  check_in_for_any_course bool
+}
+
+// one or more trainer has multiple clients
+trainer.trainer_id <> clients.client_id
+// one client have multiple plan consustancy and subscription
+clients.plan_id < plans.plan_id
+clients.consult_id < consultancy.consult_id
+clients.subscription_id < subscription.subscription_id
+
+// one plan have multiple consultency and subscriptions
+plans.consult_id < consultancy.consult_id
+plans.subscription_id < subscription.subscription_id
+
+// one subscription can have multiple plans and consultency
+subscription.plan_id < plans.plan_id
+subscription.consult_id < consultancy.consult_id
+
+// one cline can have multiple orders and payment details
+clients.client_id < order.client_id
+clients.client_id < payments.client_id
+// one order have one payment id
+order.order_id - payments.order_id
+// one client have one progress report
+clients.client_id - progress_tracker_of_clients.client_id
