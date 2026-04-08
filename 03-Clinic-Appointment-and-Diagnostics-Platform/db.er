@@ -1,0 +1,97 @@
+doctors [icon: doctor, color: blue] {
+  doctor_id int pk
+  doctor_full_name string NOT NULL
+  doctor_email VARCHAR(100) NOT NULL
+  doctor_ph_no VARCHAR(15) NOT NULL
+  doctor_age int
+  doctor_gender ENUM ["Male", "Female", "others"]
+  doctor_year_of_experience int
+  doctor_degrees text
+  doctor_specilization text NOT NULL
+}
+
+patients [icon: users, color: yellow] {
+  patient_id int pk
+  patient_full_name string NOT NULL
+  patient_email VARCHAR(100)
+  patient_ph_no VARCHAR(15) NOT NULL
+  patient_age int
+  patient_gender ENUM ["Male", "Female", "others"]
+  doctor_id int fk
+  is_booked_appoinment bool 
+  appoinment_id int fk
+  is_booked_consultency bool
+  consultency_id int fk
+}
+
+consultency [icon: , color: blue] {
+  consultency_id int pk
+  patient_id int fk
+  doctor_id int fk
+  consultency_date Date NOT NULL
+  is_test_needed bool
+  test_id int fk
+  consultency_price int NOT NULL
+}
+
+appoinments [icon: folder, color: red] {
+  appoinment_id int pk
+  patient_id int fk
+  doctor_id int fk
+  date_of_appoinment Date
+  time_of_appoinment text
+  is_apponment_done bool
+  price_of_appoinment int NOT NULL
+}
+
+diagonestic_test [icon: report] {
+  test_id int pk
+  patient_id int fk
+  doctor_id int fk
+  sample_taken_from_the_patient bool 
+  test_completed bool
+  test_price int NOT NULL
+  report_id int fk
+  is_consultency_test bool
+  consultency_id int fk
+}
+
+report [icon: report] {
+  report_id int pk
+  patient_id int fk
+  doctor_id int fk
+  is_test_report bool
+  test_id int fk
+  is_consultency_report bool
+  consultency_id int fk
+  payment_id int fk
+}
+
+payment_details [icon: money, color: green] {
+  payment_id int pk
+  patient_id int fk
+  total_price int NOT NULL
+  mode_of_payment ENUM ["CASH", "UPI", "CARD", "CHEQUE"]
+  payment_status ENUM ["DONE", "NOT DONE"]
+}
+
+// one doctor can have many patient
+doctors.doctor_id < patients.doctor_id
+// one doctor can have multiple consultency
+doctors.doctor_id < consultency.doctor_id
+// one patient can have many consusltation
+patients.patient_id < consultency.patient_id
+// one patient can have many appoinments
+patients.patient_id < appoinments.patient_id
+// one patient can have many tests
+patients.patient_id < diagonestic_test.patient_id
+// one patients can have many repots
+patients.patient_id < report.patient_id
+// one consultatent can have many tests
+consultency.consultency_id < diagonestic_test.consultency_id
+// one consultation can have many repots
+consultency.consultency_id < report.consultency_id
+// one repot can have multiple tests
+report.report_id < diagonestic_test.report_id
+// one patient have multiple payment id
+patients.patient_id < payment_details.payment_id
