@@ -1,0 +1,67 @@
+vehicles [icon: car, color: blue] {
+  vehicles_id int pk
+  vehicles_owner_name text
+  vehicles_owner_ph_no VARCHAR(15)
+  vehicles_is_vip bool
+  vehicles_is_crossplay bool
+  vehicles_is_exhibitors bool
+  vehicles_is_creators bool
+  vehicles_is_staff_members bool
+  vehicles_is_EV_charging bool
+  tickit_id int fk
+  parking_slots_id int fk
+  parking_area_id int fk
+}
+
+parking_area [icon: report, color: blue] {
+  parking_area_id int pk
+  no_of_total_slots int
+  no_of_available_slots int
+  is_area_reserved_for_vip bool
+  is_area_reserved_for_cosplayers bool
+  is_area_reserved_for_exhibitors bool
+  is_area_reserved_for_creators bool
+  is_area_reserved_for_staff_members bool
+  is_area_reserved_for_EV_charging bool
+  is_area_reserved_for_visitors bool
+  price_per_houre int default 100
+}
+
+parking_slots [icon: home, color: yellow] {
+  parking_slots_id int pk
+  parking_area_id int fk
+  vehicles_id int fk
+  is_slot_free bool
+  entry_time string
+  exit_time string
+  tickit_id int fk
+}
+
+tickit [icon: folder] {
+  tickit_id int pk
+  vehicles_id int fk
+  parking_slots_id int fk
+  entry_time string
+  exit_time string
+  total_price int
+}
+
+payment_details[icon: money, color: green] {
+  payment_id int pk
+  tickit_id int fk
+  payment_method ENUM ["CASH", "UPI", "CARD"]
+  payment_status bool
+}
+
+// one vechile has one parking slot
+vehicles.vehicles_id - parking_slots.vehicles_id
+// one vechile has one tickit
+vehicles.vehicles_id - tickit.vehicles_id
+// one vechile has one ticket
+vehicles.tickit_id - tickit.tickit_id
+// one ticket one payment
+tickit.tickit_id - payment_details.tickit_id
+// one parkeing area has many slots
+parking_area.parking_area_id < parking_slots.parking_area_id
+// one slot many ticket
+parking_slots.tickit_id < tickit.tickit_id
