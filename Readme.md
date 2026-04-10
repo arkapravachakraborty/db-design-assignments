@@ -1,8 +1,8 @@
 Here is the latest Erase Link for Smart Elevator Control DB Design [Click Here For Erase Link](https://app.eraser.io/workspace/kSx1LDEPOTgvoNTJB3Ky?origin=share)
 
-Smart Elevator Control DB Design Code Link: [Click Here](https://github.com/arkapravachakraborty/db-design-assignments/blob/main/04-Comic-Con-Parking-System/db.er)
+Smart Elevator Control DB Design Code Link: [Click Here](https://github.com/arkapravachakraborty/db-design-assignments/blob/main/05-Smart-Elevator-Control/db.er)
 
-Smart Elevator Control DB Design ![DB Image](https://github.com/arkapravachakraborty/db-design-assignments/blob/main/04-Comic-Con-Parking-System/db-screenshort.png)
+Smart Elevator Control DB Design ![DB Image](https://github.com/arkapravachakraborty/db-design-assignments/blob/main/05-Smart-Elevator-Control/db-screenshort.png)
 
 
 Comic-Con Parking System DB Design Code and Image Link: [Click Here](https://github.com/arkapravachakraborty/db-design-assignments/blob/main/04-Comic-Con-Parking-System/db.er)
