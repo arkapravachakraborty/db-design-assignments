@@ -1,0 +1,86 @@
+buildings [icon: building, color: blue] {
+  building_id int pk
+  building_name text
+  type_of_building ENUM []
+  no_of_elevators int
+  no_of_staff int
+  no_of_working_elevators int
+  no_of_not_working_elevators int
+  zone_id int fk
+}
+
+elevator [icon: car, color: blue] {
+  elevator_id int pk
+  name_of_elevator text
+  is_elevator_working bool
+  building_id int fk
+  zone_id int fk
+  status_of_elevator ENUM ["idle", "moving", "maintenance"]
+  floor_id int fk
+  no_of_rides 
+  last_maintanence_date Date
+  no_of_time_maintanence int
+  ride_id int fk
+}
+
+staff [icon: user, color: red] {
+  staff_id int pk
+  staff_name text
+  staff_phone_no VARCHAR(15)
+  staff_email VARCHAR(100)
+  zone_id int fk
+  building_id int fk
+  elevator_id int fk
+  salary int
+}
+
+zone [icon: circle, color: yellow] {
+  zone_id int pk
+  zone_name text
+  no_of_building int
+  no_of_elevators int
+  no_of_staff int
+}
+
+floor [icon: home, color: yellow] {
+  floor_id int pk
+  name_of_floor text
+  building_id int fk
+  is_elevator_on_floor bool
+  is_req_from_floor bool
+  req_id int fk
+}
+
+request [icon: resistor, color: orange] {
+  req_id int pk
+  elevator_id int fk
+  floor_id int fk // from which req occured
+  target_floor_id int
+  req_status ENUM ["Success", "Pending", "Not-Completed"]
+  ride_id int fk
+}
+
+ride_logs [icon: road, color: white] {
+  ride_id int pk
+  req_id int fk
+  req_floor_id int
+  target_floor_id int
+  ride_status ENUM ["Not-Started", "On-Going", "Completed"]
+  ride_date Date
+  ride_time text
+}
+
+// one building multiple elevators
+buildings.building_id < elevator.building_id
+// one building has many floors
+buildings.building_id < floor.building_id
+// one elevator has one staff
+elevator.elevator_id - staff.elevator_id
+// one elevator multiple req
+elevator.elevator_id < request.elevator_id
+// one elevator in one floor
+elevator.floor_id - floor.floor_id
+// one elevator multiple rides
+elevator.ride_id < ride_logs.ride_id
+// one zone mutiple buildings
+zone.zone_id < buildings.zone_id
