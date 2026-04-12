@@ -1,4 +1,8 @@
-Here is the latest Erase Link for Smart Elevator Control DB Design [Click Here For Erase Link](https://app.eraser.io/workspace/kSx1LDEPOTgvoNTJB3Ky?origin=share)
+Here is the latest Erase Link for Simple IPL Management DB Design [Click Here For Erase Link](https://app.eraser.io/workspace/LOwzzdcdfNl0OrWM8KQh?origin=share)
+
+Simple IPL Management DB Design Code Link: [Click Here](https://github.com/arkapravachakraborty/db-design-assignments/blob/main/06-ipl_db-design/db.er)
+
+Simple IPL Management DB Design ![DB Image](https://github.com/arkapravachakraborty/db-design-assignments/blob/main/06-ipl_db-design/db-screenshort.png)
 
 Smart Elevator Control DB Design Code Link: [Click Here](https://github.com/arkapravachakraborty/db-design-assignments/blob/main/05-Smart-Elevator-Control/db.er)
 
