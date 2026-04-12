@@ -1,0 +1,72 @@
+player [icon: user, color: blue] {
+  player_id int pk
+  player_name string
+  player_ph_no VARCHAR(15)
+  player_email VARCHAR(100)
+  player_age int
+  team_id int fk
+  player_role ENUM ["batsman", "bowler", "all-rounder"]
+  is_wicket_keeper bool
+  player_batting_hand ENUM ["right", "left", "ambidextrous"]
+  player_bowling_hand ENUM ["right", "left", "ambidextrous"]
+  player_batting_style string
+  is_captain bool
+  no_of_matches int
+  no_of_runs_scored int
+  no_of_ball_conced int
+  no_of_sixes int
+  no_of_fours int
+  no_of_over_bowled int
+  no_of_wicket_taken int
+  debut_year string
+  is_orange_cap bool
+  is_purple_cap bool
+}
+
+team [icon: users, color: blue] {
+  team_id int pk
+  team_name string
+  owner_id int fk
+  no_of_titles int
+  debut_year string
+  current_valuation int
+}
+
+owner [icon: home] {
+  owner_id int pk
+  owner_name string
+  owner_ph_no VARCHAR(15)
+  owner_email VARCHAR(100)
+  no_of_year_of_ownership int
+  no_of_year_of_ownership_remaining int
+}
+
+sponsor [icon: money] {
+  sponsor_int int pk
+  sponsor_name text
+  team_id int fk
+  value_of_sponshorship int
+  total_no_of_years_contract int 
+  no_of_years_contract_remaining int
+  type_of_sponshorship string
+}
+
+broadcaster [icon: message-circle, color: green] {
+  broadcaster_id int pk
+  broadcaster_name string
+  broadcaster_value int
+  total_no_of_years_contract int
+  no_of_years_contract_remaining int
+  is_tv_broadcast bool
+  is_online_broadcast bool
+  team_id int fk
+}
+
+// one team multiple player
+team.team_id < player.team_id
+// one team multiple owner
+team.owner_id < owner.owner_id
+// one team multiple sponsors
+team.team_id < sponsor.team_id
+// one team can have multiple broadcaster
+team.team_id < broadcaster.team_id
